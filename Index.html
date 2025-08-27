@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSociety DDoS - World Domination Edition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="fsociety-logo.png" alt="FSociety Logo" class="logo">
+        <h1>FSOCIETY</h1>
+        <p class="slogan">WE ARE FINALLY FREE. WE ARE FINALLY AWAKE. RULE THE WORLD.</p>
+        
+        <div class="input-group">
+            <label for="targetUrl">Target Url</label>
+            <input type="text" id="targetUrl" placeholder="https://example.com">
+        </div>
+        
+        <div class="input-group">
+            <label for="requestCount">Jumlah Request</label>
+            <input type="number" id="requestCount" value="1000" min="1">
+        </div>
+        
+        <div class="input-group">
+            <label for="threads">Threads (Power Level)</label>
+            <input type="number" id="threads" value="5" min="1" max="20">
+        </div>
+        
+        <div class="input-group">
+            <label for="method">Attack Method</label>
+            <select id="method">
+                <option value="GET">GET (Quick Hits)</option>
+                <option value="POST">POST (Heavy Payload)</option>
+                <option value="HEAD">HEAD (Stealth Probe)</option>
+            </select>
+        </div>
+        
+        <div class="input-group">
+            <label for="proxies">Proxy List (Comma-separated)</label>
+            <textarea id="proxies" placeholder="http://proxy1:port, http://proxy2:port"></textarea>
+        </div>
+        
+        <button onclick="startAttack()">Start Attack</button>
+        <button onclick="toggleConfigEditor()">Edit Config</button>
+        
+        <div id="configEditor" class="config-editor" style="display: none;">
+            <h2>Config Editor</h2>
+            <textarea id="configJson" rows="10"></textarea>
+            <button onclick="saveConfig()">Save & Reload</button>
+        </div>
+        
+        <div id="log" class="log">
+            <p>Menyerang <span id="targetDisplay"></span> sebanyak <span id="requestDisplay"></span> request...</p>
+            <ul id="requestLog"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
