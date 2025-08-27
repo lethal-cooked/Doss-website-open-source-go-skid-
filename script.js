@@ -4,11 +4,11 @@ let config = {
     defaultThreads: 5,
     defaultMethod: "GET",
     defaultProxies: [],
-    attackInterval: 100,  // Faster for more power
-    maxLogEntries: 50     // More logs for epic feel
+    attackInterval: 100,
+    maxLogEntries: 50
 };
 
-// Load config from localStorage if available (simulating file load)
+// Load config from localStorage
 if (localStorage.getItem('fsocietyConfig')) {
     config = JSON.parse(localStorage.getItem('fsocietyConfig'));
 }
@@ -32,7 +32,6 @@ function saveConfig() {
     try {
         config = JSON.parse(jsonArea.value);
         localStorage.setItem('fsocietyConfig', JSON.stringify(config));
-        // Reapply to inputs
         document.getElementById('targetUrl').value = config.defaultTarget;
         document.getElementById('requestCount').value = config.defaultRequests;
         document.getElementById('threads').value = config.defaultThreads;
@@ -66,7 +65,6 @@ function startAttack() {
     requestLog.innerHTML = '';
     let logCount = 0;
 
-    // Simulate multi-threaded attack with setInterval for each "thread"
     for (let t = 0; t < threads; t++) {
         const interval = setInterval(() => {
             if (logCount >= requestCount) {
@@ -79,15 +77,14 @@ function startAttack() {
             const logEntry = document.createElement('li');
             logEntry.textContent = `[${requestNum}] Request berhasil via ${method} (${proxy})`;
             requestLog.appendChild(logEntry);
-            requestLog.scrollTop = requestLog.scrollHeight; // Auto-scroll
+            requestLog.scrollTop = requestLog.scrollHeight;
             logCount++;
 
             if (logCount >= config.maxLogEntries) {
-                requestLog.removeChild(requestLog.firstChild); // Keep logs manageable
+                requestLog.removeChild(requestLog.firstChild);
             }
         }, config.attackInterval);
     }
 
-    // Fake console output for that hacker vibe
     console.log(`Unleashing ${threads} threads on ${targetUrl} with ${requestCount} ${method} requests. Proxies: ${proxies.length ? 'Engaged' : 'None'}. World domination in progress, Boss.`);
 }
