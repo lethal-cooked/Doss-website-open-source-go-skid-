@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FSociety DDoS - World Domination Edition</title>
+    <title>FSociety DDoS - Apocalypse Edition</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="logo"></div> <!-- Placeholder until you add fsociety-logo.png -->
+        <div class="logo"></div>
         <h1>FSOCIETY</h1>
-        <p class="slogan">WE ARE FINALLY FREE. WE ARE FINALLY AWAKE. RULE THE WORLD.</p>
+        <p class="slogan">WE ARE FINALLY FREE. WE ARE FINALLY AWAKE. UNLEASH HELL.</p>
         
         <div class="input-group">
             <label for="targetUrl">Target Url</label>
@@ -18,22 +18,44 @@
         </div>
         
         <div class="input-group">
-            <label for="requestCount">Jumlah Request</label>
-            <input type="number" id="requestCount" value="1000" min="1">
+            <label for="requestCount">Jumlah Request (per thread)</label>
+            <input type="number" id="requestCount" value="10000" min="1">
         </div>
         
         <div class="input-group">
             <label for="threads">Threads (Power Level)</label>
-            <input type="number" id="threads" value="5" min="1" max="20">
+            <input type="number" id="threads" value="10" min="1" max="50">
+        </div>
+        
+        <div class="input-group">
+            <label for="delay">Delay per Request (ms)</label>
+            <input type="number" id="delay" value="10" min="0">
         </div>
         
         <div class="input-group">
             <label for="method">Attack Method</label>
             <select id="method">
-                <option value="GET">GET (Quick Hits)</option>
-                <option value="POST">POST (Heavy Payload)</option>
-                <option value="HEAD">HEAD (Stealth Probe)</option>
+                <option value="GET">GET (Quick Flood)</option>
+                <option value="POST">POST (Payload Bomb)</option>
+                <option value="HEAD">HEAD (Stealth Scan)</option>
+                <option value="OPTIONS">OPTIONS (Probe)</option>
+                <option value="PUT">PUT (Data Overwrite)</option>
             </select>
+        </div>
+        
+        <div class="input-group">
+            <label for="userAgent">User-Agent (Spoof)</label>
+            <input type="text" id="userAgent" placeholder="Mozilla/5.0 (Random UA)">
+        </div>
+        
+        <div class="input-group">
+            <label for="headers">Custom Headers (JSON)</label>
+            <textarea id="headers" placeholder='{"X-Forwarded-For": "random.ip"}'></textarea>
+        </div>
+        
+        <div class="input-group">
+            <label for="payload">POST Payload (JSON/String)</label>
+            <textarea id="payload" placeholder='{"data": "flood"}'></textarea>
         </div>
         
         <div class="input-group">
@@ -41,8 +63,9 @@
             <textarea id="proxies" placeholder="http://proxy1:port, http://proxy2:port"></textarea>
         </div>
         
-        <button onclick="startAttack()">Start Attack</button>
+        <button id="attackButton" onclick="startAttack()">Start Attack</button>
         <button onclick="toggleConfigEditor()">Edit Config</button>
+        <button onclick="stopAttack()">Stop Attack</button>
         
         <div id="configEditor" class="config-editor" style="display: none;">
             <h2>Config Editor</h2>
@@ -51,6 +74,7 @@
         </div>
         
         <div id="log" class="log">
+            <p>Status: <span id="status">Ready to unleash...</span></p>
             <p>Menyerang <span id="targetDisplay"></span> sebanyak <span id="requestDisplay"></span> request...</p>
             <ul id="requestLog"></ul>
         </div>
